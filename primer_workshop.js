@@ -1,165 +1,191 @@
-class usuarios{
-    constructor(nombre, apellido, email, telefono){
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.telefono = telefono; 
-    }  
+const OPCIONES_MENU_PRINCIPAL = `
+  Elija una opcion:
+  1- Usuarios
+  2- Productos
+  3- Pedidos
+  4- Salir
+`;
 
-    getNombre(){
-        return this.nombre; }
+const OPCIONES_MENU_USUARIO = `
+  Elija una opcion:
+  1 Listado usuarios
+  2 Alta usuario
+  3 Volver
+`;
 
-    getApellido(){
-        return this.apellido; }
+const OPCIONES_MENU_PRODUCTO = `
+  Elija una opcion:
+  1 Listado productos
+  2 Alta producto
+  3 Volver
+`;
 
-    listadoUsuarios(){
-     return "Nombre: " + this.nombre +" Apellido: "+ this.apellido + "\nEmail: " + this.email + " Telefono: " +this.telefono;   }
+const OPCIONES_MENU_PEDIDO = `
+  Elija una opcion:
+  1 Listado pedidos
+  2 Alta pedido
+  3 Volver
+`;
 
+const usuarios = [];
+
+function listarUsuarios() {
+	console.log('Listado de usuarios...');
+	usuarios.forEach((u) => console.log(`Usuario: ${u.nombre} - Email: ${u.email}`));
 }
 
-class productos{
-    constructor(nombre, precio){
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-
-    listadoProductos(){
-        return "Nombre: " + this.nombre +" Precio: "+ this.precio;   }
+function darAltaUsuario(usuario) {
+	usuarios.push(usuario);
+	console.log('Usuario dado de alta');
+	return usuarios.slice();
 }
 
-class pedidos{
-    constructor(usuario, producto){
-        this.usuario = usuario;
-        this.producto = producto;
-    }
-
-    getUsuario(){
-        return this.usuario; }
-
-    getProducto(){
-        return this.producto; }
-
-    listadoPedidos(){
-        return "Nombre: " + this.usuario +" Producto: "+ this.producto;   }
+function darBajaUsuario() {
+	let index = usuarios.indexOf(this);
+	if (index !== -1) {
+		console.log('Usuario dado de baja');
+		usuarios.splice(index, 1);
+	} else {
+		console.log('Usuario no encontrado');
+	}
 }
 
-arrayPedidos = [];
-arrayUsuario = [];
-arrayProducto = [];
+function buscarUsuario(nombreUsuario) {
+	return usuarios.find((p) => p.nombre === nombreUsuario);
+}
 
-do{
-opcion = parseInt(prompt("Ingrese opcion:\n1. Modulo usuario\n2. Modulo producto\n3. Modulo pedidos\n4. Salir del programa"));
-switch (opcion) {
-  case 1:
-     do {
-        op1 = parseInt(prompt("Ingrese opcion:\n1. Alta usuario\n2. Listado de usuarios\nPresione cualquier numero para regresar al menú inicial"));
-        switch (op1) {
-        case 1:
-            do{
-            nombre= prompt("Ingrese nombre: (Stop) para salir ");
-            if(nombre !="Stop"){
-                apellido = prompt("Ingrese apellido: ");
-                email = prompt("Ingrese email: ");
-                telefono = parseInt(prompt("Ingrese su telefono: "));
-                user = new usuarios(nombre, apellido, email, telefono);
-                arrayUsuario.push(user);}
-            }while(nombre!="Stop");
-            break;
+const productos = [];
 
-        case 2:
-            let cadenaUser ='';
-            for (i=0;i<arrayUsuario.length;i++){
-                cadenaUser +='\n '+[i+1]+'.- '+ arrayUsuario[i].listadoUsuarios();
-            }
-            alert(cadenaUser);
-            break;
+function darAltaProducto(nuevoProducto) {
+  // Validaciones?
+  productos.push(nuevoProducto);
+  console.log("Producto dado de alta");
+  return productos.slice();
+}
 
-        default:
-            break;
-        }
-     }while(op1==1 || op1==2);
+function darBajaProducto(nombreProducto) {
+  let index = productos.findIndex(p => p.nombre === nombreProducto);
+  if (index !== -1) {
+    console.log("Producto dado de baja");
+    productos.splice(index, 1);
+  } else {
+    console.log("Producto no encontrado");
+  }
+}
 
-     continue;
+function listarProductos() {
+  console.log("Listado de productos...");
+  productos.forEach(p => console.log(`Nombre Producto: ${p.nombre} - Precio Producto: ${p.precio}`));
+}
 
-    case 2:
-     do {
-        op2 = parseInt(prompt("Ingrese opcion:\n1. Alta producto\n2. Listado de producto\nPresione cualquier numero para regresar al menú inicial"));
-        switch (op2) {
-        case 1:
-            do{
-            nombre = prompt("Ingrese nombre: (Stop) para salir ");
-            if(nombre !="Stop"){
-                precio = prompt("Ingrese precio: ");
-                prod = new productos(nombre, precio);
-                arrayProducto.push(prod);}
-            }while(nombre!="Stop");
-            break;
+function buscarProducto(nombreProducto) {
+  return productos.find(p => p.nombre === nombreProducto);
+}
 
-        case 2:
-            let cadenaProd ='';
-            for (i=0; i<arrayProducto.length; i++){
-                cadenaProd +='\n '+[i+1]+'.- '+ arrayProducto[i].listadoProductos();
-            }
-            alert(cadenaProd);
-            break;
+const pedidos = [];
 
-        default:
-            break;
-        }
-        
-     }while(op2==1 || op2==2);
+function ingresarUsuario() {
+	const nombre = prompt('Nombre de usuario');
+	const apellido = prompt('Apellido de usuario');
+	const edad = prompt('Edad de usuario');
+	const email = prompt('Email de usuario');
+	const telefono = prompt('Telefono de usuario');
+	return { nombre, apellido, edad, email, telefono };
+}
 
-     continue;
-    
-     case 3:
-        do {
-            op3 = parseInt(prompt("Ingrese opcion:\n1. Alta pedido\n2. Listado de pedidos\nPresione cualquier numero para regresar al menú inicial"));
-            switch (op3) {
-            case 1:
-                do{
-                    do{
-                    let cadenaUser ='';
-                    for (i=0;i<arrayUsuario.length;i++){
-                        cadenaUser +='\n '+[i+1]+'.- '+ arrayUsuario[i].getNombre()+' '+ arrayUsuario[i].getApellido();
-                    }
-                    userPedido = prompt("Seleccione usuario que realiza el pedido: (Stop) para salir \n"+cadenaUser);
-                    if(userPedido=="Stop") break;
-                    }while(userPedido>arrayUsuario.length || userPedido==0);
+function ingresarProducto() {
+	const nombre = prompt('Nombre de producto');
+	const precio = parseInt(prompt('Precio de producto'));
+	return { nombre, precio };
+}
 
-                    do{
-                    if(userPedido=="Stop") break;
-                    let cadenaProd ='';
-                    for (i=0;i<arrayProducto.length;i++){
-                        cadenaProd +='\n '+[i+1]+'.- '+ arrayProducto[i].listadoProductos();
-                    }
-                    prodPedido = prompt("Seleccione producto que realiza el pedido: \n"+cadenaProd);
-                    }while(userPedido>arrayProducto.length || userPedido==0);
-                    ped=new pedidos(userPedido, prodPedido);
-                    arrayPedidos.push(ped);
-                }while(userPedido!="Stop");
-                break;
-    
-            case 2:
-                let cadenaPed ='';
-                for (i=0; i<arrayPedidos.length; i++){
-                    cadenaPed +='\n '+[i+1]+'.- '+ arrayPedidos[i].listadoPedidos();
-                }
-                alert(cadenaPed);
-                break;
-    
-            default:
-                break;
-            }
-            
-         }while(op3==1 || op3==2);
-         
-     continue;
+function darAltaPedido() {
+	const nombreUsuario = prompt('Ingrese el nombre del usuario que realiza el pedido');
+	const nombreProducto = prompt('Ingrese el nombre del producto sobre el que realiza el pedido');
+	const usuarioValido = buscarUsuario(nombreUsuario);
+	const productoValido = buscarProducto(nombreProducto);
+	// TODO: Agregar confirmacion
+	if (usuarioValido && productoValido) {
+		pedidos.push({
+			usuario: usuarioValido.nombre,
+			producto: productoValido.nombre
+		});
+	}
+}
 
-    case 4: 
-        break;
-        
-    default:
-        break;
-};
+function listarPedidos() {
+	console.log('Listado de pedidos...');
+	pedidos.forEach((p) => console.log(`Usuario del pedido: ${p.usuario} - Producto: ${p.producto}`));
+}
 
-}while(opcion==1 || opcion==2 || opcion==3);
+function submenuUsuario() {
+	let opcion = prompt(OPCIONES_MENU_USUARIO);
+	while (opcion !== '3') {
+		switch (opcion) {
+			case '1':
+				listarUsuarios();
+				break;
+			case '2':
+				let usuario = ingresarUsuario();
+				darAltaUsuario(usuario);
+			case '3':
+				break;
+		}
+		opcion = prompt(OPCIONES_MENU_USUARIO);
+	}
+}
+
+function submenuProducto() {
+	let opcion = prompt(OPCIONES_MENU_PRODUCTO);
+	while (opcion !== '3') {
+		switch (opcion) {
+			case '1':
+				listarProductos();
+				break;
+			case '2':
+				let producto = ingresarProducto();
+				darAltaProducto(producto);
+			case '3':
+				break;
+		}
+		opcion = prompt(OPCIONES_MENU_PRODUCTO);
+	}
+}
+
+function submenuPedido() {
+	let opcion = prompt(OPCIONES_MENU_PEDIDO);
+	while (opcion !== '3') {
+		switch (opcion) {
+			case '1':
+				listarPedidos();
+				break;
+			case '2':
+				darAltaPedido();
+			case '3':
+				break;
+		}
+		opcion = prompt(OPCIONES_MENU_PEDIDO);
+	}
+}
+
+function menuPrincipal() {
+	let opcion;
+	do {
+		opcion = prompt(OPCIONES_MENU_PRINCIPAL);
+		switch (opcion) {
+			case '1':
+				submenuUsuario();
+				break;
+			case '2':
+				submenuProducto();
+				break;
+			case '3':
+				submenuPedido();
+				break;
+			case '4':
+				return;
+		}
+	} while (opcion !== '4');
+}
+
+menuPrincipal();
