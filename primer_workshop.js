@@ -16,17 +16,20 @@ class productos{
         this.nombre = nombre;
         this.precio = precio;
     }
+
+    listadoProductos(){
+        return "Nombre: " + this.nombre +"\nPrecio: "+ this.precio;   }
 }
    
 arrayUsuario=[];
 arrayProducto=[];
 
 do{
-opcion = parseInt(prompt("Ingrese opcion:\n1. modulo usuario\n 2. modulo producto \n 3. modulo pedidos \n 4. salir"));
+opcion = parseInt(prompt("Ingrese opcion:\n1. Modulo usuario\n2. Modulo producto\n3. Modulo pedidos\n4. Salir del programa"));
 switch (opcion) {
   case 1:
      do {
-        op1 = parseInt(prompt("Ingrese opcion:\n1. alta usuario\n 2.listado de usuarios"));
+        op1 = parseInt(prompt("Ingrese opcion:\n1. Alta usuario\n2. Listado de usuarios\nPresione cualquier numero para regresar al menú inicial"));
         switch (op1) {
         case 1:
                 do{
@@ -47,18 +50,19 @@ switch (opcion) {
             break;
         default:
             break;
-        };
-        break;
+        }
+        
     }while(op1==1 || op1==2);
 
+    continue;
 
     case 2:
      do {
-        op2 = parseInt(prompt("Ingrese opcion:\n1. alta producto\n2. listado de producto"));
+        op2 = parseInt(prompt("Ingrese opcion:\n1. alta producto\n2. listado de producto\nPresione cualquier numero para regresar al menú inicial"));
         switch (op2) {
         case 1:
                 do{
-                nombre= prompt("Ingrese nombre: (Stop) para salir ");
+                nombre = prompt("Ingrese nombre: (Stop) para salir ");
                 if(nombre !="Stop"){
                 precio = prompt("Ingrese precio: ");
 
@@ -68,7 +72,7 @@ switch (opcion) {
             break;
         case 2:
             for (i=0;i<arrayProducto.length;i++){
-                alert("Nombre: " + arrayProducto[i].nombre + "\nPrecio: " +arrayProducto[i].precio)
+                alert(arrayProducto[i].listadoProductos())
             }
             break;
         default:
@@ -78,9 +82,10 @@ switch (opcion) {
         break;
     }while(op1==1 || op1==2);
 
+    continue;
 
     case 4: 
         break;
 };
-break;
+
 }while(opcion==1 ||opcion==2||opcion==3);
